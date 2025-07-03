@@ -8,6 +8,7 @@ import {
   summarizeMarketTrends,
   type SummarizeMarketTrendsOutput,
 } from "@/ai/flows/summarize-market-trends";
+import { useLanguage } from "@/contexts/language-context";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -36,6 +37,7 @@ const formSchema = z.object({
 });
 
 export function MarketTrends() {
+  const { language, t } = useLanguage();
   const [result, setResult] = useState<SummarizeMarketTrendsOutput | null>(
     null
   );
@@ -56,10 +58,10 @@ export function MarketTrends() {
     setResult(null);
 
     try {
-      const trendsResult = await summarizeMarketTrends(values);
+      const trendsResult = await summarizeMarketTrends({...values, language});
       setResult(trendsResult);
     } catch (err) {
-      setError("An error occurred while fetching market trends. Please try again.");
+      setError(t('errorOccurred'));
       console.error(err);
     } finally {
       setLoading(false);
@@ -70,10 +72,10 @@ export function MarketTrends() {
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">
-          Market Price Trends
+          {t('marketTitle')}
         </CardTitle>
         <CardDescription className="text-center">
-          Get recent market trends and future price predictions for your crop.
+          {t('marketDescription')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -84,9 +86,9 @@ export function MarketTrends() {
               name="crop"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Crop Name</FormLabel>
+                  <FormLabel>{t('cropLabel')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Wheat, Tomato" {...field} />
+                    <Input placeholder={t('cropPlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,9 +99,9 @@ export function MarketTrends() {
               name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Location</FormLabel>
+                  <FormLabel>{t('locationLabel')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Punjab, Maharashtra" {...field} />
+                    <Input placeholder={t('locationPlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -109,12 +111,12 @@ export function MarketTrends() {
               {loading ? (
                 <>
                   <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
-                  Analyzing...
+                  {t('analyzingButton')}
                 </>
               ) : (
                 <>
                  <BarChart className="mr-2 h-5 w-5" />
-                 Get Trends
+                 {t('getTrendsButton')}
                 </>
               )}
             </Button>
@@ -139,8 +141,8 @@ export function MarketTrends() {
             <div className="space-y-4">
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle>Market Summary</CardTitle>
-                        <SpeakButton text={result.summary} />
+                        <CardTitle>{t('marketSummaryTitle')}</CardTitle>
+                        <SpeakButton text={result.summary} lang={language} />
                     </CardHeader>
                     <CardContent>
                         <p>{result.summary}</p>
@@ -148,8 +150,8 @@ export function MarketTrends() {
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle>Price Prediction</CardTitle>
-                        <SpeakButton text={result.prediction} />
+                        <CardTitle>{t('pricePredictionTitle')}</CardTitle>
+                        <SpeakButton text={result.prediction} lang={language} />
                     </CardHeader>
                     <CardContent>
                         <p>{result.prediction}</p>

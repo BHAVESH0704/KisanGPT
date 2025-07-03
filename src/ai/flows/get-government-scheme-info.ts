@@ -1,4 +1,3 @@
-// src/ai/flows/get-government-scheme-info.ts
 'use server';
 
 /**
@@ -23,6 +22,7 @@ const GetGovernmentSchemeInfoInputSchema = z.object({
     .describe(
       'Specific query about government schemes, such as eligibility criteria or application process.'
     ),
+  language: z.string().describe('The language for the response (e.g., "en", "hi", "mr").'),
 });
 export type GetGovernmentSchemeInfoInput = z.infer<typeof GetGovernmentSchemeInfoInputSchema>;
 
@@ -55,6 +55,8 @@ const prompt = ai.definePrompt({
   input: {schema: GetGovernmentSchemeInfoInputSchema},
   output: {schema: GetGovernmentSchemeInfoOutputSchema},
   prompt: `You are an expert in Indian government schemes for farmers. Given the farmer's details and their query, provide information about relevant schemes.
+
+Respond in the language specified by the user: {{{language}}}.
 
 Farmer Details: {{{farmerDetails}}}
 Query: {{{query}}}

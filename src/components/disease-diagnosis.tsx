@@ -5,6 +5,7 @@ import {
   diagnosePlantDisease,
   type DiagnosePlantDiseaseOutput,
 } from "@/ai/flows/diagnose-plant-disease";
+import { useLanguage } from "@/contexts/language-context";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { UploadCloud, X, BrainCircuit } from "lucide-react";
@@ -14,6 +15,7 @@ import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { SpeakButton } from "./speak-button";
 
 export function DiseaseDiagnosis() {
+  const { language, t } = useLanguage();
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [result, setResult] = useState<DiagnosePlantDiseaseOutput | null>(null);
@@ -76,10 +78,10 @@ export function DiseaseDiagnosis() {
 
     try {
       const photoDataUri = await fileToBase64(file);
-      const diagnosisResult = await diagnosePlantDisease({ photoDataUri });
+      const diagnosisResult = await diagnosePlantDisease({ photoDataUri, language });
       setResult(diagnosisResult);
     } catch (err) {
-      setError("An error occurred during diagnosis. Please try again.");
+      setError(t('errorOccurred'));
       console.error(err);
     } finally {
       setLoading(false);
@@ -90,7 +92,7 @@ export function DiseaseDiagnosis() {
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">
-          Upload a Plant Image
+          {t('uploadTitle')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -103,11 +105,11 @@ export function DiseaseDiagnosis() {
           >
             <UploadCloud className="w-12 h-12 text-muted-foreground" />
             <p className="mt-4 text-center text-muted-foreground">
-              <span className="font-semibold text-primary">Click to upload</span>{" "}
-              or drag and drop an image.
+              <span className="font-semibold text-primary">{t('uploadPrompt').split(' ').slice(0, 2).join(' ')}</span>{" "}
+              {t('uploadPrompt').split(' ').slice(2).join(' ')}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              PNG, JPG or JPEG
+              {t('uploadHint')}
             </p>
             <input
               ref={fileInputRef}
@@ -148,10 +150,10 @@ export function DiseaseDiagnosis() {
             {loading ? (
               <>
                 <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
-                Analyzing...
+                {t('analyzingButton')}
               </>
             ) : (
-              "Diagnose Disease"
+              t('diagnoseButton')
             )}
           </Button>
         </div>
@@ -174,8 +176,8 @@ export function DiseaseDiagnosis() {
           <div className="space-y-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle>Diagnosis</CardTitle>
-                <SpeakButton text={result.diagnosis} />
+                <CardTitle>{t('diagnosisResultTitle')}</CardTitle>
+                <SpeakButton text={result.diagnosis} lang={language} />
               </CardHeader>
               <CardContent>
                 <p className="text-base">{result.diagnosis}</p>
@@ -183,8 +185,8 @@ export function DiseaseDiagnosis() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle>Suggested Remedies</CardTitle>
-                <SpeakButton text={result.remedies} />
+                <CardTitle>{t('remediesResultTitle')}</CardTitle>
+                <SpeakButton text={result.remedies} lang={language} />
               </CardHeader>
               <CardContent>
                 <p className="text-base whitespace-pre-wrap">{result.remedies}</p>

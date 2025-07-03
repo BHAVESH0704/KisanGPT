@@ -8,6 +8,7 @@ import {
   getGovernmentSchemeInfo,
   type GetGovernmentSchemeInfoOutput,
 } from "@/ai/flows/get-government-scheme-info";
+import { useLanguage } from "@/contexts/language-context";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -43,6 +44,7 @@ const formSchema = z.object({
 });
 
 export function SchemeInfo() {
+  const { language, t } = useLanguage();
   const [result, setResult] = useState<GetGovernmentSchemeInfoOutput | null>(
     null
   );
@@ -63,10 +65,10 @@ export function SchemeInfo() {
     setResult(null);
 
     try {
-      const schemeResult = await getGovernmentSchemeInfo(values);
+      const schemeResult = await getGovernmentSchemeInfo({...values, language});
       setResult(schemeResult);
     } catch (err) {
-      setError("An error occurred while fetching scheme information. Please try again.");
+      setError(t('errorOccurred'));
       console.error(err);
     } finally {
       setLoading(false);
@@ -77,10 +79,10 @@ export function SchemeInfo() {
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">
-          Government Scheme Navigator
+          {t('schemeTitle')}
         </CardTitle>
         <CardDescription className="text-center">
-          Find relevant government schemes based on your profile and needs.
+          {t('schemeDescription')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -91,10 +93,10 @@ export function SchemeInfo() {
               name="farmerDetails"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Farmer Details</FormLabel>
+                  <FormLabel>{t('farmerDetailsLabel')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="e.g., Small farmer from Karnataka, growing rice and cotton."
+                      placeholder={t('farmerDetailsPlaceholder')}
                       className="resize-none"
                       {...field}
                     />
@@ -108,10 +110,10 @@ export function SchemeInfo() {
               name="query"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Question</FormLabel>
+                  <FormLabel>{t('yourQuestionLabel')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g., How to apply for crop insurance?"
+                      placeholder={t('yourQuestionPlaceholder')}
                       {...field}
                     />
                   </FormControl>
@@ -123,12 +125,12 @@ export function SchemeInfo() {
               {loading ? (
                 <>
                   <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
-                  Searching...
+                  {t('searchingButton')}
                 </>
               ) : (
                 <>
                   <BookOpen className="mr-2 h-5 w-5" />
-                  Find Schemes
+                  {t('findSchemesButton')}
                 </>
               )}
             </Button>
@@ -162,18 +164,18 @@ export function SchemeInfo() {
                       </AccordionTrigger>
                       <AccordionContent className="space-y-4 text-base">
                         <div className="flex justify-end">
-                            <SpeakButton text={schemeText} />
+                            <SpeakButton text={schemeText} lang={language} />
                         </div>
                         <div>
-                          <h4 className="font-semibold">Eligibility</h4>
+                          <h4 className="font-semibold">{t('eligibility')}</h4>
                           <p>{scheme.eligibility}</p>
                         </div>
                         <div>
-                          <h4 className="font-semibold">Application Process</h4>
+                          <h4 className="font-semibold">{t('applicationProcess')}</h4>
                           <p>{scheme.applicationProcess}</p>
                         </div>
                         <div>
-                          <h4 className="font-semibold">Status Updates</h4>
+                          <h4 className="font-semibold">{t('statusUpdates')}</h4>
                           <p>{scheme.statusUpdates}</p>
                         </div>
                       </AccordionContent>
@@ -183,9 +185,9 @@ export function SchemeInfo() {
               </Accordion>
             ) : (
               <Alert>
-                <AlertTitle>No Schemes Found</AlertTitle>
+                <AlertTitle>{t('noSchemesFoundTitle')}</AlertTitle>
                 <AlertDescription>
-                  We couldn't find any specific schemes based on your query. Please try rephrasing or providing more details.
+                  {t('noSchemesFoundDescription')}
                 </AlertDescription>
               </Alert>
             )}

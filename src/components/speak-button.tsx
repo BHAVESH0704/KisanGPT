@@ -11,7 +11,7 @@ import {
 } from "./ui/tooltip";
 
 
-export function SpeakButton({ text }: { text: string }) {
+export function SpeakButton({ text, lang }: { text: string, lang: string }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
 
@@ -37,13 +37,23 @@ export function SpeakButton({ text }: { text: string }) {
     }
 
     const utterance = new SpeechSynthesisUtterance(text);
-    // Prefer Indian English voice if available
     const voices = window.speechSynthesis.getVoices();
-    const indianVoice = voices.find(voice => voice.lang === 'en-IN');
-    if (indianVoice) {
-      utterance.voice = indianVoice;
+
+    const voiceMap: { [key: string]: string } = {
+        'en': 'en-IN',
+        'hi': 'hi-IN',
+        'mr': 'mr-IN',
+    };
+
+    const targetLang = voiceMap[lang] || 'en-IN';
+    utterance.lang = targetLang;
+
+    // Prefer voice for the target language if available
+    const selectedVoice = voices.find(voice => voice.lang === targetLang);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
     }
-    utterance.lang = "en-IN";
+
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = (event) => {
