@@ -16,8 +16,16 @@ const GetWeatherForecastInputSchema = z.object({
 });
 export type GetWeatherForecastInput = z.infer<typeof GetWeatherForecastInputSchema>;
 
+const DailyForecastSchema = z.object({
+    day: z.string().describe('The day of the forecast (e.g., "Today", "Tomorrow", "Wednesday").'),
+    icon: z.enum(['Sun', 'Cloud', 'Cloudy', 'CloudRain', 'CloudSun', 'Wind', 'Thermometer']).describe('A lucide-react icon name that best represents the weather conditions.'),
+    temperature: z.string().describe('The temperature range for the day (e.g., "25°C - 32°C").'),
+    description: z.string().describe('A brief description of the weather conditions.'),
+});
+
 const GetWeatherForecastOutputSchema = z.object({
-  forecast: z.string().describe('A 3-day weather forecast summary.'),
+  forecast: z.array(DailyForecastSchema).describe('A 3-day weather forecast.'),
+  summary: z.string().describe('A summary of the 3-day weather forecast to be used for text-to-speech.'),
 });
 export type GetWeatherForecastOutput = z.infer<typeof GetWeatherForecastOutputSchema>;
 
@@ -31,7 +39,10 @@ const prompt = ai.definePrompt({
   name: 'getWeatherForecastPrompt',
   input: {schema: GetWeatherForecastInputSchema},
   output: {schema: GetWeatherForecastOutputSchema},
-  prompt: `You are a helpful weather assistant. Provide a 3-day weather forecast for the specified location. Include temperature range, chance of rain, and wind conditions.
+  prompt: `You are a helpful weather assistant. Provide a 3-day weather forecast for the specified location. 
+  
+For each day, provide the day of the week, a suitable lucide-react icon name from the provided list, the temperature range, and a brief description.
+Provide a concise summary of the whole forecast as well.
 
 Respond in the language specified by the user: {{{language}}}.
 

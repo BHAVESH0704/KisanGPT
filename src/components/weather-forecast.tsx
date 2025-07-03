@@ -27,12 +27,28 @@ import {
 import { Input } from "./ui/input";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Skeleton } from "./ui/skeleton";
-import { BrainCircuit, CloudSun } from "lucide-react";
+import { BrainCircuit, CloudSun as CloudSunIcon, Sun, Cloud, Cloudy, CloudRain, Wind, Thermometer } from "lucide-react";
 import { SpeakButton } from "./speak-button";
 
 const formSchema = z.object({
   location: z.string().min(2, "Location must be at least 2 characters."),
 });
+
+type IconName = 'Sun' | 'Cloud' | 'Cloudy' | 'CloudRain' | 'CloudSun' | 'Wind' | 'Thermometer';
+
+const weatherIcons: Record<IconName, React.ReactNode> = {
+    Sun: <Sun className="h-12 w-12 text-yellow-500" />,
+    Cloud: <Cloud className="h-12 w-12 text-gray-400" />,
+    Cloudy: <Cloudy className="h-12 w-12 text-gray-500" />,
+    CloudRain: <CloudRain className="h-12 w-12 text-blue-500" />,
+    CloudSun: <CloudSunIcon className="h-12 w-12 text-yellow-400" />,
+    Wind: <Wind className="h-12 w-12 text-gray-400" />,
+    Thermometer: <Thermometer className="h-12 w-12 text-red-500" />,
+};
+
+const WeatherIcon = ({ iconName }: { iconName: IconName }) => {
+    return weatherIcons[iconName] || <CloudSunIcon className="h-12 w-12 text-gray-400" />;
+}
 
 export function WeatherForecast() {
   const { language, t } = useLanguage();
@@ -88,7 +104,7 @@ export function WeatherForecast() {
               </>
             ) : (
               <>
-               <CloudSun className="mr-2 h-5 w-5" />
+               <CloudSunIcon className="mr-2 h-5 w-5" />
                {t('getForecastButton')}
               </>
             )}
@@ -104,22 +120,36 @@ export function WeatherForecast() {
       )}
 
       {loading && (
-          <div className="space-y-2 pt-2">
-              <Skeleton className="h-4 w-1/3" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
+          <div className="flex justify-between gap-4 pt-4">
+              {[...Array(3)].map((_, i) => (
+                  <div key={i} className="flex flex-col items-center space-y-2 flex-1 p-4 bg-muted/50 rounded-lg">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-12 w-12 rounded-full" />
+                      <Skeleton className="h-4 w-20" />
+                      <Skeleton className="h-4 w-24" />
+                  </div>
+              ))}
           </div>
       )}
 
-      {result && (
+      {result && result.forecast && (
           <div className="space-y-4 pt-2 animate-fade-in-up">
               <Card className="bg-background/50">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                       <CardTitle className="text-lg">{t('forecastResultTitle')}</CardTitle>
-                      <SpeakButton text={result.forecast} lang={language} />
+                      {result.summary && <SpeakButton text={result.summary} lang={language} />}
                   </CardHeader>
                   <CardContent>
-                      <p className="whitespace-pre-wrap">{result.forecast}</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                        {result.forecast.map((dayForecast, index) => (
+                            <div key={index} className="flex flex-col items-center p-4 rounded-lg bg-muted/50 space-y-2">
+                                <p className="font-bold text-lg">{dayForecast.day}</p>
+                                <WeatherIcon iconName={dayForecast.icon as IconName} />
+                                <p className="font-semibold text-xl">{dayForecast.temperature}</p>
+                                <p className="text-sm text-muted-foreground">{dayForecast.description}</p>
+                            </div>
+                        ))}
+                    </div>
                   </CardContent>
               </Card>
           </div>
