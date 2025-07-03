@@ -1,6 +1,6 @@
 'use client';
 
-import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store } from "lucide-react";
+import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store, Sprout, TestTube2, Users } from "lucide-react";
 import Image from "next/image";
 import { DiseaseDiagnosis } from "@/components/disease-diagnosis";
 import { MarketTrends } from "@/components/market-trends";
@@ -17,6 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { CropRecommendations } from "@/components/crop-recommendations";
+import { SoilTesting } from "@/components/soil-testing";
+import { FarmerCommunity } from "@/components/farmer-community";
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
@@ -73,7 +76,7 @@ export default function Home() {
                     width={500}
                     height={500}
                     className="rounded-full object-cover shadow-2xl"
-                    data-ai-hint="indian farmer"
+                    data-ai-hint="indian farmer smiling"
                   />
               </div>
             </div>
@@ -146,6 +149,45 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <AgroShops />
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <Sprout className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('cropRecommendationsTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('cropRecommendationsDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <CropRecommendations />
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <TestTube2 className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('soilTestingTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('soilTestingDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <SoilTesting />
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <Users className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('farmerCommunityTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('farmerCommunityDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <FarmerCommunity />
                 </CardContent>
               </Card>
 
