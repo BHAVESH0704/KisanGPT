@@ -73,7 +73,7 @@ export default function Home() {
                     width={400}
                     height={400}
                     className="rounded-full object-cover shadow-2xl"
-                    data-ai-hint="indian farmer"
+                    data-ai-hint="happy farmer"
                   />
               </div>
             </div>
