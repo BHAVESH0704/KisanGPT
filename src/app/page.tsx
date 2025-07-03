@@ -68,12 +68,12 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                   <Image
-                    src="https://placehold.co/400x400.png"
+                    src="https://placehold.co/500x500.png"
                     alt="Farmer"
-                    width={400}
-                    height={400}
+                    width={500}
+                    height={500}
                     className="rounded-full object-cover shadow-2xl"
-                    data-ai-hint="happy farmer"
+                    data-ai-hint="indian farmer"
                   />
               </div>
             </div>
