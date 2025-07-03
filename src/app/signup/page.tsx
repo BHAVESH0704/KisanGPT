@@ -1,0 +1,139 @@
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/contexts/language-context';
+import { Leaf } from 'lucide-react';
+
+const formSchema = z.object({
+    name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+    email: z.string().email({ message: 'Invalid email address.' }),
+    password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+});
+
+export default function SignupPage() {
+  const { t } = useLanguage();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // TODO: Handle form submission
+    console.log(values);
+  }
+
+  const GoogleIcon = () => (
+    <svg className="mr-2 h-4 w-4" viewBox="0 0 48 48">
+      <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039L38.828 6.173C34.636 2.373 29.636 0 24 0C10.745 0 0 10.745 0 24s10.745 24 24 24s24-10.745 24-24c0-3.732-.772-7.22-2.148-10.428l-1.541 1.511z"></path>
+      <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039L38.828 6.173C34.636 2.373 29.636 0 24 0C10.745 0 0 10.745 0 24s10.745 24 24 24s24-10.745 24-24c0-3.732-.772-7.22-2.148-10.428l-1.541 1.511z"></path>
+      <path fill="#4CAF50" d="M24 48c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 40.61 26.715 42 24 42c-5.218 0-9.58-3.356-11.303-7.918l-6.522 5.023C9.507 43.522 16.227 48 24 48z"></path>
+      <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.443-2.61 4.481-4.904 5.836l6.19 5.238C42.012 36.37 44 30.556 44 24c0-1.933-.163-3.813-.465-5.625z"></path>
+    </svg>
+  );
+
+  return (
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
+       <div className="hidden bg-muted lg:block">
+        <Image
+          src="https://placehold.co/1920x1080.png"
+          alt="Image"
+          width="1920"
+          height="1080"
+          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          data-ai-hint="indian farmer portrait"
+        />
+      </div>
+      <div className="flex items-center justify-center py-12">
+        <div className="mx-auto grid w-[350px] gap-6">
+          <div className="grid gap-2 text-center">
+            <Link href="/" className="flex items-center justify-center gap-2 mb-4">
+                <Leaf className="h-8 w-8 text-primary" />
+                <h1 className="text-3xl font-bold text-primary tracking-tight">
+                  {t('title')}
+                </h1>
+            </Link>
+            <h1 className="text-3xl font-bold">{t('signupTitle')}</h1>
+            <p className="text-balance text-muted-foreground">
+              {t('signupDescription')}
+            </p>
+          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('nameLabel')}</FormLabel>
+                    <FormControl>
+                      <Input placeholder={t('namePlaceholder')} {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('emailLabel')}</FormLabel>
+                    <FormControl>
+                      <Input placeholder={t('emailPlaceholder')} {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('passwordLabel')}</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full">
+                {t('createAccountButton')}
+              </Button>
+              <Button variant="outline" className="w-full">
+                <GoogleIcon />
+                {t('signupWithGoogleButton')}
+              </Button>
+            </form>
+          </Form>
+          <div className="mt-4 text-center text-sm">
+            {t('loginPrompt')}
+            <Link href="/login" className="underline ml-1">
+              {t('loginLink')}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

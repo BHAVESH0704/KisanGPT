@@ -1,6 +1,7 @@
 'use client';
 
 import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store, Sprout, TestTube2, Users, Search, User } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 import { DiseaseDiagnosis } from "@/components/disease-diagnosis";
 import { MarketTrends } from "@/components/market-trends";
@@ -34,15 +35,14 @@ export default function Home() {
               {t('title')}
             </h1>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon">
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
             </Button>
-            <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Profile</span>
-            </Button>
+            <Link href="/login">
+                <Button variant="outline">{t('loginButtonNav')}</Button>
+            </Link>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
