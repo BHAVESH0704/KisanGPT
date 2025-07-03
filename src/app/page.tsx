@@ -1,9 +1,12 @@
 'use client';
 
-import { Leaf, DollarSign, ScrollText, Languages, BrainCircuit } from "lucide-react";
+import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store } from "lucide-react";
+import Image from "next/image";
 import { DiseaseDiagnosis } from "@/components/disease-diagnosis";
 import { MarketTrends } from "@/components/market-trends";
 import { SchemeInfo } from "@/components/scheme-info";
+import { WeatherForecast } from "@/components/weather-forecast";
+import { AgroShops } from "@/components/agro-shops";
 import { useLanguage, type Language } from "@/contexts/language-context";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,7 +55,7 @@ export default function Home() {
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 to-background">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-primary">
@@ -63,8 +66,15 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="hidden lg:block">
-                  <BrainCircuit className="h-full w-full text-primary/10" />
+              <div className="flex items-center justify-center">
+                  <Image
+                    src="https://placehold.co/400x400.png"
+                    alt="Farmer"
+                    width={400}
+                    height={400}
+                    className="rounded-full object-cover shadow-2xl"
+                    data-ai-hint="indian farmer"
+                  />
               </div>
             </div>
           </div>
@@ -110,6 +120,32 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <SchemeInfo />
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <CloudSun className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('weatherTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('weatherDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <WeatherForecast />
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <Store className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('agroShopsTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('agroShopsDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <AgroShops />
                 </CardContent>
               </Card>
 
