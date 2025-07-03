@@ -1,7 +1,6 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Leaf, DollarSign, ScrollText, Languages } from "lucide-react";
+import { Leaf, DollarSign, ScrollText, Languages, BrainCircuit } from "lucide-react";
 import { DiseaseDiagnosis } from "@/components/disease-diagnosis";
 import { MarketTrends } from "@/components/market-trends";
 import { SchemeInfo } from "@/components/scheme-info";
@@ -14,73 +13,110 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8 lg:p-12">
-      <div className="w-full max-w-4xl mx-auto">
-        <header className="text-center mb-10 relative">
-          <div className="absolute top-0 right-0">
-             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Languages className="h-4 w-4 mr-2" />
-                  {language.toUpperCase()}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuRadioGroup
-                  value={language}
-                  onValueChange={(value) => setLanguage(value as Language)}
-                >
-                  <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="hi">हिंदी (Hindi)</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="mr">मराठी (Marathi)</DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <div className="flex justify-center items-center gap-4 mb-2">
-            <Leaf className="h-12 w-12 text-primary" />
-            <h1 className="text-5xl md:text-6xl font-headline font-bold text-primary">
+    <div className="flex flex-col min-h-screen">
+      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Leaf className="h-8 w-8 text-primary" />
+            <h1 className="text-2xl font-bold text-primary tracking-tight">
               {t('title')}
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground">
-            {t('description')}
-          </p>
-        </header>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                <Languages className="h-4 w-4 mr-2" />
+                {language.toUpperCase()}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuRadioGroup
+                value={language}
+                onValueChange={(value) => setLanguage(value as Language)}
+              >
+                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="hi">हिंदी (Hindi)</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="mr">मराठी (Marathi)</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </header>
+      
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 to-background">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="space-y-2">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-primary">
+                    {t('title')}
+                  </h1>
+                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                    {t('description')}
+                  </p>
+                </div>
+              </div>
+              <div className="hidden lg:block">
+                  <BrainCircuit className="h-full w-full text-primary/10" />
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <Tabs defaultValue="disease" className="w-full">
-          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 h-auto sm:h-12 rounded-lg">
-            <TabsTrigger value="disease" className="py-2.5 text-base gap-2">
-              <Leaf className="h-5 w-5" />
-              {t('diseaseDiagnosisTab')}
-            </TabsTrigger>
-            <TabsTrigger value="market" className="py-2.5 text-base gap-2">
-              <DollarSign className="h-5 w-5" />
-              {t('marketTrendsTab')}
-            </TabsTrigger>
-            <TabsTrigger value="schemes" className="py-2.5 text-base gap-2">
-              <ScrollText className="h-5 w-5" />
-              {t('govtSchemesTab')}
-            </TabsTrigger>
-          </TabsList>
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <Leaf className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('diseaseDiagnosisTab')}</CardTitle>
+                  </div>
+                   <CardDescription>{t('uploadTitle')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <DiseaseDiagnosis />
+                </CardContent>
+              </Card>
 
-          <TabsContent value="disease" className="mt-6">
-            <DiseaseDiagnosis />
-          </TabsContent>
-          <TabsContent value="market" className="mt-6">
-            <MarketTrends />
-          </TabsContent>
-          <TabsContent value="schemes" className="mt-6">
-            <SchemeInfo />
-          </TabsContent>
-        </Tabs>
-      </div>
-    </main>
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <DollarSign className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('marketTrendsTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('marketDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <MarketTrends />
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <ScrollText className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-xl">{t('govtSchemesTab')}</CardTitle>
+                  </div>
+                  <CardDescription>{t('schemeDescription')}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <SchemeInfo />
+                </CardContent>
+              </Card>
+
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

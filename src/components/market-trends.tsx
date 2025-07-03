@@ -13,7 +13,6 @@ import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -69,97 +68,88 @@ export function MarketTrends() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          {t('marketTitle')}
-        </CardTitle>
-        <CardDescription className="text-center">
-          {t('marketDescription')}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="crop"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('cropLabel')}</FormLabel>
-                  <FormControl>
-                    <Input placeholder={t('cropPlaceholder')} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('locationLabel')}</FormLabel>
-                  <FormControl>
-                    <Input placeholder={t('locationPlaceholder')} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={loading} className="w-full text-lg py-6">
-              {loading ? (
-                <>
-                  <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
-                  {t('analyzingButton')}
-                </>
-              ) : (
-                <>
-                 <BarChart className="mr-2 h-5 w-5" />
-                 {t('getTrendsButton')}
-                </>
-              )}
-            </Button>
-          </form>
-        </Form>
-        
-        {error && (
-            <Alert variant="destructive">
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-            </Alert>
-        )}
+    <div className="space-y-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="crop"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('cropLabel')}</FormLabel>
+                <FormControl>
+                  <Input placeholder={t('cropPlaceholder')} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('locationLabel')}</FormLabel>
+                <FormControl>
+                  <Input placeholder={t('locationPlaceholder')} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={loading} className="w-full text-md py-5">
+            {loading ? (
+              <>
+                <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
+                {t('analyzingButton')}
+              </>
+            ) : (
+              <>
+               <BarChart className="mr-2 h-5 w-5" />
+               {t('getTrendsButton')}
+              </>
+            )}
+          </Button>
+        </form>
+      </Form>
+      
+      {error && (
+          <Alert variant="destructive">
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+          </Alert>
+      )}
 
-        {loading && (
-            <div className="space-y-4">
-                <Skeleton className="h-24 w-full" />
-                <Skeleton className="h-24 w-full" />
-            </div>
-        )}
+      {loading && (
+          <div className="space-y-2 pt-2">
+              <Skeleton className="h-4 w-1/3" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+          </div>
+      )}
 
-        {result && (
-            <div className="space-y-4">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle>{t('marketSummaryTitle')}</CardTitle>
-                        <SpeakButton text={result.summary} lang={language} />
-                    </CardHeader>
-                    <CardContent>
-                        <p>{result.summary}</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle>{t('pricePredictionTitle')}</CardTitle>
-                        <SpeakButton text={result.prediction} lang={language} />
-                    </CardHeader>
-                    <CardContent>
-                        <p>{result.prediction}</p>
-                    </CardContent>
-                </Card>
-            </div>
-        )}
-      </CardContent>
-    </Card>
+      {result && (
+          <div className="space-y-4 pt-2">
+              <Card className="bg-background/50">
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                      <CardTitle className="text-lg">{t('marketSummaryTitle')}</CardTitle>
+                      <SpeakButton text={result.summary} lang={language} />
+                  </CardHeader>
+                  <CardContent>
+                      <p>{result.summary}</p>
+                  </CardContent>
+              </Card>
+              <Card className="bg-background/50">
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                      <CardTitle className="text-lg">{t('pricePredictionTitle')}</CardTitle>
+                      <SpeakButton text={result.prediction} lang={language} />
+                  </CardHeader>
+                  <CardContent>
+                      <p>{result.prediction}</p>
+                  </CardContent>
+              </Card>
+          </div>
+      )}
+    </div>
   );
 }

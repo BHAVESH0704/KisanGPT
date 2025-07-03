@@ -11,13 +11,6 @@ import {
 import { useLanguage } from "@/contexts/language-context";
 import { Button } from "./ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import {
   Form,
   FormControl,
   FormField,
@@ -76,124 +69,115 @@ export function SchemeInfo() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          {t('schemeTitle')}
-        </CardTitle>
-        <CardDescription className="text-center">
-          {t('schemeDescription')}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="farmerDetails"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('farmerDetailsLabel')}</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={t('farmerDetailsPlaceholder')}
-                      className="resize-none"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="query"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('yourQuestionLabel')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t('yourQuestionPlaceholder')}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={loading} className="w-full text-lg py-6">
-              {loading ? (
-                <>
-                  <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
-                  {t('searchingButton')}
-                </>
-              ) : (
-                <>
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  {t('findSchemesButton')}
-                </>
-              )}
-            </Button>
-          </form>
-        </Form>
-        
-        {error && (
-            <Alert variant="destructive">
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-            </Alert>
-        )}
-
-        {loading && (
-            <div className="space-y-4">
-                <Skeleton className="h-12 w-full" />
-                <Skeleton className="h-12 w-full" />
-            </div>
-        )}
-
-        {result && (
-          <div>
-            {result.schemes.length > 0 ? (
-              <Accordion type="single" collapsible className="w-full">
-                {result.schemes.map((scheme, index) => {
-                  const schemeText = `Scheme: ${scheme.name}. Eligibility: ${scheme.eligibility}. Application Process: ${scheme.applicationProcess}. Status Updates: ${scheme.statusUpdates}.`;
-                  return (
-                    <AccordionItem value={`item-${index}`} key={index}>
-                      <AccordionTrigger className="text-lg">
-                        {scheme.name}
-                      </AccordionTrigger>
-                      <AccordionContent className="space-y-4 text-base">
-                        <div className="flex justify-end">
-                            <SpeakButton text={schemeText} lang={language} />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">{t('eligibility')}</h4>
-                          <p>{scheme.eligibility}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">{t('applicationProcess')}</h4>
-                          <p>{scheme.applicationProcess}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold">{t('statusUpdates')}</h4>
-                          <p>{scheme.statusUpdates}</p>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  );
-                })}
-              </Accordion>
-            ) : (
-              <Alert>
-                <AlertTitle>{t('noSchemesFoundTitle')}</AlertTitle>
-                <AlertDescription>
-                  {t('noSchemesFoundDescription')}
-                </AlertDescription>
-              </Alert>
+    <div className="space-y-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="farmerDetails"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('farmerDetailsLabel')}</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder={t('farmerDetailsPlaceholder')}
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
+          />
+          <FormField
+            control={form.control}
+            name="query"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('yourQuestionLabel')}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t('yourQuestionPlaceholder')}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={loading} className="w-full text-md py-5">
+            {loading ? (
+              <>
+                <BrainCircuit className="mr-2 h-5 w-5 animate-pulse" />
+                {t('searchingButton')}
+              </>
+            ) : (
+              <>
+                <BookOpen className="mr-2 h-5 w-5" />
+                {t('findSchemesButton')}
+              </>
+            )}
+          </Button>
+        </form>
+      </Form>
+      
+      {error && (
+          <Alert variant="destructive">
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+          </Alert>
+      )}
+
+      {loading && (
+          <div className="space-y-2 pt-2">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
           </div>
-        )}
-      </CardContent>
-    </Card>
+      )}
+
+      {result && (
+        <div className="pt-2">
+          {result.schemes.length > 0 ? (
+            <Accordion type="single" collapsible className="w-full rounded-md border">
+              {result.schemes.map((scheme, index) => {
+                const schemeText = `Scheme: ${scheme.name}. Eligibility: ${scheme.eligibility}. Application Process: ${scheme.applicationProcess}. Status Updates: ${scheme.statusUpdates}.`;
+                return (
+                  <AccordionItem value={`item-${index}`} key={index} className="px-4 border-b last:border-b-0">
+                    <AccordionTrigger className="text-left hover:no-underline">
+                      {scheme.name}
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 text-base">
+                      <div className="flex justify-end -mt-4">
+                          <SpeakButton text={schemeText} lang={language} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-primary">{t('eligibility')}</h4>
+                        <p className="text-muted-foreground">{scheme.eligibility}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-primary">{t('applicationProcess')}</h4>
+                        <p className="text-muted-foreground">{scheme.applicationProcess}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-primary">{t('statusUpdates')}</h4>
+                        <p className="text-muted-foreground">{scheme.statusUpdates}</p>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          ) : (
+            <Alert>
+              <AlertTitle>{t('noSchemesFoundTitle')}</AlertTitle>
+              <AlertDescription>
+                {t('noSchemesFoundDescription')}
+              </AlertDescription>
+            </Alert>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
