@@ -54,7 +54,7 @@ export default function SignupPage() {
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
        <div className="hidden bg-muted lg:block">
         <Image
-          src="https://images.unsplash.com/photo-1628858721723-47bfcc76dd7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmYXJtZXIlMjBpbWFnZSUyMGluZGlhbnxlbnwwfHx8fDE3NTE1NjM5NTF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+          src="https://images.unsplash.com/photo-1696371269777-88d1ce71642c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxpbmRpYW4lMjBmYXJtZXIlMjBpbWFnZSUyMHxlbnwwfHx8fDE3NTE1NjQxNDF8MA&ixlib=rb-4.1.0&q=80&w=1080"
           alt="Image"
           width="1920"
           height="1080"
