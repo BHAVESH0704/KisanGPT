@@ -102,9 +102,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <Leaf className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('diseaseDiagnosisTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('uploadTitle')}</CardTitle>
                   </div>
-                   <CardDescription>{t('uploadTitle')}</CardDescription>
+                   <CardDescription>{t('diseaseDiagnosisTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <DiseaseDiagnosis />
@@ -115,9 +115,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <DollarSign className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('marketTrendsTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('marketDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('marketDescription')}</CardDescription>
+                  <CardDescription>{t('marketTrendsTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <MarketTrends />
@@ -128,9 +128,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <ScrollText className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('govtSchemesTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('schemeDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('schemeDescription')}</CardDescription>
+                  <CardDescription>{t('govtSchemesTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <SchemeInfo />
@@ -141,9 +141,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <CloudSun className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('weatherTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('weatherDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('weatherDescription')}</CardDescription>
+                  <CardDescription>{t('weatherTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <WeatherForecast />
@@ -154,9 +154,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <Store className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('agroShopsTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('agroShopsDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('agroShopsDescription')}</CardDescription>
+                  <CardDescription>{t('agroShopsTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <AgroShops />
@@ -167,9 +167,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <Sprout className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('cropRecommendationsTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('cropRecommendationsDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('cropRecommendationsDescription')}</CardDescription>
+                  <CardDescription>{t('cropRecommendationsTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <CropRecommendations />
@@ -180,9 +180,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <TestTube2 className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('soilTestingTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('soilTestingDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('soilTestingDescription')}</CardDescription>
+                  <CardDescription>{t('soilTestingTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <SoilTesting />
@@ -193,9 +193,9 @@ export default function Home() {
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <Users className="h-8 w-8 text-primary" />
-                    <CardTitle className="text-xl">{t('farmerCommunityTab')}</CardTitle>
+                    <CardTitle className="text-xl">{t('farmerCommunityDescription')}</CardTitle>
                   </div>
-                  <CardDescription>{t('farmerCommunityDescription')}</CardDescription>
+                  <CardDescription>{t('farmerCommunityTab')}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <FarmerCommunity />
