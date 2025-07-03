@@ -2,6 +2,7 @@ export const translations = {
   en: {
     title: 'KisanGPT',
     description: 'Your AI-powered farming assistant',
+    featuresTitle: 'Browse All Features',
     diseaseDiagnosisTab: 'Disease Diagnosis',
     marketTrendsTab: 'Market Trends',
     govtSchemesTab: 'Govt. Schemes',
@@ -78,6 +79,7 @@ export const translations = {
   hi: {
     title: 'किसानGPT',
     description: 'आपका AI-संचालित खेती सहायक',
+    featuresTitle: 'सभी सुविधाएँ ब्राउज़ करें',
     diseaseDiagnosisTab: 'रोग निदान',
     marketTrendsTab: 'बाजार के रुझान',
     govtSchemesTab: 'सरकारी योजनाएं',
@@ -154,6 +156,7 @@ export const translations = {
   mr: {
     title: 'किसानGPT',
     description: 'तुमचा AI-चालित शेती सहाय्यक',
+    featuresTitle: 'सर्व वैशिष्ट्ये ब्राउझ करा',
     diseaseDiagnosisTab: 'रोग निदान',
     marketTrendsTab: 'बाजार ट्रेंड्स',
     govtSchemesTab: 'सरकारी योजना',

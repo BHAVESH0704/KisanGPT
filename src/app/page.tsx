@@ -1,6 +1,6 @@
 'use client';
 
-import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store, Sprout, TestTube2, Users } from "lucide-react";
+import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store, Sprout, TestTube2, Users, Search, User } from "lucide-react";
 import Image from "next/image";
 import { DiseaseDiagnosis } from "@/components/disease-diagnosis";
 import { MarketTrends } from "@/components/market-trends";
@@ -34,24 +34,34 @@ export default function Home() {
               {t('title')}
             </h1>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Languages className="h-4 w-4 mr-2" />
-                {language.toUpperCase()}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuRadioGroup
-                value={language}
-                onValueChange={(value) => setLanguage(value as Language)}
-              >
-                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="hi">हिंदी (Hindi)</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="mr">मराठी (Marathi)</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon">
+                <Search className="h-5 w-5" />
+                <span className="sr-only">Search</span>
+            </Button>
+            <Button variant="ghost" size="icon">
+                <User className="h-5 w-5" />
+                <span className="sr-only">Profile</span>
+            </Button>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                    <Languages className="h-4 w-4 mr-2" />
+                    {language.toUpperCase()}
+                </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                <DropdownMenuRadioGroup
+                    value={language}
+                    onValueChange={(value) => setLanguage(value as Language)}
+                >
+                    <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="hi">हिंदी (Hindi)</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="mr">मराठी (Marathi)</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </header>
       
@@ -85,7 +95,8 @@ export default function Home() {
 
         <section id="features" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <h2 className="text-3xl font-bold tracking-tight text-center mb-10">{t('featuresTitle')}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
               <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
                 <CardHeader>
