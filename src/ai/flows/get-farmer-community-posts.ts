@@ -22,7 +22,7 @@ const ReplySchema = z.object({
 
 const PostSchema = z.object({
     author: z.string().describe("The name of the post's author."),
-    avatarUrl: z.string().url().describe('A placeholder URL for the author avatar.'),
+    avatarUrl: z.string().describe('A placeholder URL for the author avatar.'),
     timestamp: z.string().describe("A relative timestamp, e.g., '2 hours ago'."),
     content: z.string().describe('The content of the forum post.'),
     replies: z.array(ReplySchema).describe('A list of replies to the post.'),
