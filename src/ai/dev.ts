@@ -9,3 +9,4 @@ import '@/ai/flows/find-agro-shops.ts';
 import '@/ai/flows/get-crop-recommendations.ts';
 import '@/ai/flows/test-soil.ts';
 import '@/ai/flows/get-farmer-community-posts.ts';
+import '@/ai/flows/add-community-post.ts';
