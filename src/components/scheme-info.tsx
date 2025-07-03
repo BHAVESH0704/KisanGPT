@@ -137,7 +137,7 @@ export function SchemeInfo() {
       )}
 
       {result && (
-        <div className="pt-2">
+        <div className="pt-2 animate-fade-in-up">
           {result.schemes.length > 0 ? (
             <Accordion type="single" collapsible className="w-full rounded-md border">
               {result.schemes.map((scheme, index) => {

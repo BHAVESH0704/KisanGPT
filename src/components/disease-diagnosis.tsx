@@ -186,7 +186,7 @@ export function DiseaseDiagnosis() {
       )}
 
       {result && (
-        <div className="space-y-4 pt-2">
+        <div className="space-y-4 pt-2 animate-fade-in-up">
           <Card className="bg-background/50">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="flex items-center gap-2 text-lg"><CheckCircle2 className="text-green-500" />{t('diagnosisResultTitle')}</CardTitle>

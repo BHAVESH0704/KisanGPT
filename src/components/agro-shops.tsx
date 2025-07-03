@@ -106,7 +106,7 @@ export function AgroShops() {
       )}
 
       {result && (
-        <div className="pt-2">
+        <div className="pt-2 animate-fade-in-up">
           {result.shops.length > 0 ? (
             <Card className="bg-background/50">
                 <CardHeader>

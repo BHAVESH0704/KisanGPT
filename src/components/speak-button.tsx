@@ -79,7 +79,7 @@ export function SpeakButton({ text, lang }: { text: string, lang: string }) {
             disabled={!text}
             aria-label="Speak text"
           >
-            <Volume2 className={`h-5 w-5 ${isSpeaking ? "text-accent" : ""}`} />
+            <Volume2 className={`h-5 w-5 ${isSpeaking ? "text-accent animate-pulse" : ""}`} />
           </Button>
         </TooltipTrigger>
         <TooltipContent>
