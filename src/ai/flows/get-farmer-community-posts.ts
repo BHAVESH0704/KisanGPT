@@ -52,7 +52,7 @@ const seedPrompt = ai.definePrompt({
   name: 'generateSeedPostsPrompt',
   input: { schema: z.object({ language: z.string() }) },
   output: { schema: z.object({ posts: z.array(SeedPostSchema) }) },
-  prompt: `You are a community manager for an online forum for Indian farmers. Generate 4-5 realistic forum posts. Each post should have a unique author, a plausible topic (like crop prices, weather, pest control, or new techniques). Generate 1-2 replies for some of the posts. Use 'https://placehold.co/40x40.png' for all avatar URLs. Do not include a timestamp. Respond in the language specified by the user: {{{language}}}.`,
+  prompt: `You are a community manager for an online forum for Indian farmers. Generate 4-5 realistic forum posts. Each post should have a unique author, a plausible topic (like crop prices, weather, pest control, or new techniques). Generate 1-2 replies for some of the posts. Use 'https://placehold.co/40x40.png' for all avatar URLs. Do not include a timestamp. If a post has no replies, the "replies" field must be an empty array. Respond in the language specified by the user: {{{language}}}.`,
 });
 
 
