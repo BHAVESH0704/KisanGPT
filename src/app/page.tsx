@@ -81,7 +81,7 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                   <Image
-                    src="https://placehold.co/500x500.png"
+                    src="https://images.unsplash.com/photo-1492496913980-501348b61469?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8aW5kaWFuJTIwZmFybWVyJTIwfGVufDB8fHx8MTc1MTYxNjk2N3ww&ixlib=rb-4.1.0&q=80&w=1080"
                     alt="Farmer"
                     width={500}
                     height={500}
