@@ -13,6 +13,7 @@ import {
 } from "@/ai/flows/get-farmer-community-posts";
 import { addCommunityPost } from "@/ai/flows/add-community-post";
 import { useLanguage } from "@/contexts/language-context";
+import { useAuth } from "@/contexts/auth-context";
 import { Button } from "./ui/button";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Skeleton } from "./ui/skeleton";
@@ -22,6 +23,7 @@ import { Input } from "./ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 const formSchema = z.object({
   content: z.string().min(1, "Post cannot be empty."),
@@ -29,6 +31,7 @@ const formSchema = z.object({
 
 export function FarmerCommunity() {
   const { language, t } = useLanguage();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [result, setResult] = useState<GetFarmerCommunityPostsOutput | null>(null);
   const [loading, setLoading] = useState(true);
@@ -59,11 +62,16 @@ export function FarmerCommunity() {
   }, [fetchPosts]);
   
   const handlePostSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!user) {
+        toast({ variant: 'destructive', title: "Authentication required", description: "Please log in to post to the community." });
+        return;
+    }
+
     setIsPosting(true);
     try {
         await addCommunityPost({
             content: values.content,
-            author: 'You', // This would be the authenticated user in a real app
+            author: user.displayName || 'Anonymous Farmer',
         });
         toast({ title: "Post successful!", description: "Your post has been added to the community forum." });
         form.reset();
@@ -142,25 +150,31 @@ export function FarmerCommunity() {
             })}
         </CardContent>
         <CardFooter className="pt-4 border-t">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handlePostSubmit)} className="flex w-full items-start space-x-2">
-              <FormField
-                control={form.control}
-                name="content"
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormControl>
-                      <Input placeholder={t('replyPlaceholder')} {...field} disabled={isPosting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={isPosting || loading}>
-                {isPosting ? t('searchingButton') : t('postReplyButton')}
-              </Button>
-            </form>
-          </Form>
+         {!user ? (
+            <div className="text-center w-full text-sm text-muted-foreground">
+              Please <Link href="/login" className="underline text-primary">log in</Link> to join the conversation.
+            </div>
+         ) : (
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(handlePostSubmit)} className="flex w-full items-start space-x-2">
+                <FormField
+                    control={form.control}
+                    name="content"
+                    render={({ field }) => (
+                    <FormItem className="flex-1">
+                        <FormControl>
+                        <Input placeholder={t('replyPlaceholder')} {...field} disabled={isPosting} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+                <Button type="submit" disabled={isPosting || loading}>
+                    {isPosting ? t('searchingButton') : t('postReplyButton')}
+                </Button>
+                </form>
+            </Form>
+         )}
         </CardFooter>
       </Card>
     </div>

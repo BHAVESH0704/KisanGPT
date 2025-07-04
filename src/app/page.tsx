@@ -1,6 +1,6 @@
 'use client';
 
-import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store, Sprout, TestTube2, Users, Search, User } from "lucide-react";
+import { Leaf, DollarSign, ScrollText, Languages, CloudSun, Store, Sprout, TestTube2, Users, Search, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { DiseaseDiagnosis } from "@/components/disease-diagnosis";
@@ -21,9 +21,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { CropRecommendations } from "@/components/crop-recommendations";
 import { SoilTesting } from "@/components/soil-testing";
 import { FarmerCommunity } from "@/components/farmer-community";
+import { useAuth } from "@/contexts/auth-context";
+import { UserNav } from "@/components/user-nav";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const { language, setLanguage, t } = useLanguage();
+  const { user, loading } = useAuth();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -40,9 +44,17 @@ export default function Home() {
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
             </Button>
-            <Link href="/login">
-                <Button variant="outline">{t('loginButtonNav')}</Button>
-            </Link>
+            
+            {loading ? (
+                <Skeleton className="h-9 w-9 rounded-full" />
+            ) : user ? (
+                <UserNav />
+            ) : (
+                <Link href="/login">
+                    <Button variant="outline">{t('loginButtonNav')}</Button>
+                </Link>
+            )}
+
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -81,7 +93,7 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                   <Image
-                    src="https://images.unsplash.com/photo-1696371269777-88d1ce71642c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbmRpYW4lMjBmYXJtZXIlMjBpbiUyMGZhcm0lMjAxKjF8ZW58MHx8fHwxNzUxNjE3NTM0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                    src="https://images.unsplash.com/photo-1685045760522-ecf11c1ac862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmYXJtZXIlMjBpbWFnZSUyMDEqMXxlbnwwfHx8fDE3NTE2MTc3MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
                     alt="Farmer"
                     width={500}
                     height={500}
