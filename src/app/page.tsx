@@ -81,12 +81,12 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                   <Image
-                    src="https://images.unsplash.com/photo-1492496913980-501348b61469?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8aW5kaWFuJTIwZmFybWVyJTIwfGVufDB8fHx8MTc1MTYxNjk2N3ww&ixlib=rb-4.1.0&q=80&w=1080"
+                    src="https://images.unsplash.com/photo-1696371269777-88d1ce71642c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbmRpYW4lMjBmYXJtZXIlMjBpbiUyMGZhcm0lMjAxKjF8ZW58MHx8fHwxNzUxNjE3NTM0fDA&ixlib=rb-4.1.0&q=80&w=1080"
                     alt="Farmer"
                     width={500}
                     height={500}
                     className="rounded-full object-cover shadow-2xl"
-                    data-ai-hint="indian farmer smiling"
+                    data-ai-hint="indian farmer"
                   />
               </div>
             </div>
