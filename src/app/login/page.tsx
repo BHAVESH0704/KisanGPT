@@ -116,7 +116,7 @@ export default function LoginPage() {
       </div>
       <div className="hidden bg-muted lg:block">
         <Image
-          src="https://placehold.co/1920x1080.png"
+          src="https://images.unsplash.com/photo-1615829254885-d4bfd5ce700e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOXx8aW5kaWFuJTIwZmFybWVyJTIwfGVufDB8fHx8MTc1MTYxNjk2N3ww&ixlib=rb-4.1.0&q=80&w=1080"
           alt="Image"
           width="1920"
           height="1080"
