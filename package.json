@@ -2,6 +2,10 @@
   "name": "nextn",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BHAVESH0704/KisanGPT.git"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
