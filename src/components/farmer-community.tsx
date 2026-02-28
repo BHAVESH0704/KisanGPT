@@ -1,11 +1,9 @@
-
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Timestamp } from "firebase/firestore";
 import { formatDistanceToNow } from 'date-fns';
 import {
   getFarmerCommunityPosts,
@@ -75,7 +73,7 @@ export function FarmerCommunity() {
         });
         toast({ title: "Post successful!", description: "Your post has been added to the community forum." });
         form.reset();
-        await fetchPosts(); // Refetch posts to show the new one
+        await fetchPosts();
     } catch (err) {
         setError(t('errorOccurred'));
         toast({ variant: 'destructive', title: "Error", description: "Could not submit your post. Please try again." });
@@ -84,7 +82,6 @@ export function FarmerCommunity() {
         setIsPosting(false);
     }
   };
-
 
   const PostSkeleton = () => (
     <div className="flex items-start space-x-4">
@@ -120,14 +117,15 @@ export function FarmerCommunity() {
                     <PostSkeleton/>
                 </div>
             )}
-            {result?.posts.map((post, index) => {
-                const postTimestamp = post.timestamp as Timestamp;
-                const relativeTime = postTimestamp ? formatDistanceToNow(postTimestamp.toDate(), { addSuffix: true }) : 'Just now';
+            {result?.posts.map((post) => {
+                const relativeTime = post.timestamp 
+                    ? formatDistanceToNow(new Date(post.timestamp), { addSuffix: true }) 
+                    : 'Just now';
 
                 return(
-                    <div key={post.id || index} className="flex items-start space-x-3 animate-fade-in-up">
+                    <div key={post.id} className="flex items-start space-x-3 animate-fade-in-up">
                         <Avatar>
-                            <AvatarImage src={post.avatarUrl} alt={post.author} data-ai-hint="farmer avatar" />
+                            <AvatarImage src={post.avatarUrl} alt={post.author} />
                             <AvatarFallback>{post.author.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div className="flex-1 space-y-1">
@@ -136,14 +134,16 @@ export function FarmerCommunity() {
                                 <p className="text-xs text-muted-foreground">{relativeTime}</p>
                             </div>
                             <p className="text-sm">{post.content}</p>
-                            <div className="pl-4 border-l-2 space-y-2 mt-2">
-                                {post.replies?.map((reply, replyIndex) => (
-                                    <div key={replyIndex} className="text-xs">
-                                        <p className="font-semibold">{reply.author}</p>
-                                        <p className="text-muted-foreground">{reply.content}</p>
-                                    </div>
-                                ))}
-                            </div>
+                            {post.replies && post.replies.length > 0 && (
+                                <div className="pl-4 border-l-2 space-y-2 mt-2">
+                                    {post.replies.map((reply, replyIndex) => (
+                                        <div key={replyIndex} className="text-xs">
+                                            <p className="font-semibold">{reply.author}</p>
+                                            <p className="text-muted-foreground">{reply.content}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 )
