@@ -93,8 +93,8 @@ const getFarmerCommunityPostsFlow = ai.defineFlow(
         avatarUrl: data.avatarUrl,
         content: data.content,
         replies: data.replies || [],
-        // Convert Firestore Timestamp to plain number for serialization
-        timestamp: data.timestamp?.toMillis() || null,
+        // Convert Firestore Timestamp to plain number for serialization to prevent Next.js errors
+        timestamp: data.timestamp?.toMillis ? data.timestamp.toMillis() : null,
       };
     });
 
